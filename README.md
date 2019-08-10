@@ -1,4 +1,4 @@
-# Raspberry Pi + SN75HC505 + Go
+# Raspberry Pi + SN75HC595 + Go
 
 # 配線
 
