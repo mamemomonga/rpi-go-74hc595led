@@ -1,8 +1,8 @@
 
-example:
-	go build .
-
-run: example
+run: build
 	sudo ./example
 
-.PHONY: run example
+build:
+	go build .
+
+.PHONY: run build
