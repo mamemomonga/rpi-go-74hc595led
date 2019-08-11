@@ -3,11 +3,13 @@ package simple
 import (
 	"github.com/janne/bcm2835"
 	pi595led "github.com/mamemomonga/rpi-go-74hc595led"
+	"sync"
 )
 
 var (
 	chip_num uint8
 	leds []uint8
+	mleds sync.Mutex
 )
 
 func Start(chip_n uint8) {
@@ -23,6 +25,8 @@ func Finalize() {
 }
 
 func AllHigh() {
+	mleds.Lock()
+	defer mleds.Unlock()
 	for i:=uint8(0); i<chip_num; i++ {
 		leds[i]=255
 	}
@@ -30,6 +34,8 @@ func AllHigh() {
 }
 
 func AllLow() {
+	mleds.Lock()
+	defer mleds.Unlock()
 	for i:=uint8(0); i<chip_num; i++ {
 		leds[i]=0
 	}
@@ -37,6 +43,8 @@ func AllLow() {
 }
 
 func Set(chip uint8, pin uint8, state uint8) {
+	mleds.Lock()
+	defer mleds.Unlock()
 	switch(state) {
 	case 0:
 		leds[chip] &=^ ( 1 << pin )
